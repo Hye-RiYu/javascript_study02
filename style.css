@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  background-image: url("./images/360_F_123731572_KMfBEkpbRlfQj1ypdPVwv4W0r27B9hVJ.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.task-area {
+  border: 1px solid lightgrey;
+}
+
+.task-tabs {
+  display: flex;
+  border-bottom: 1px solid lightgrey;
+  position: relative;
+}
+
+#under-line {
+  height: 4px;
+  background-color: pink;
+  position: absolute;
+  width: 80px;
+  left: 0;
+  top: 52px;
+  padding: 0;
+}
+
+.task-tabs div {
+  padding: 1em;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+}
