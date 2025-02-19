@@ -13,8 +13,12 @@ let taskList = [];
 addButton.addEventListener("click", addTask);
 
 function addTask() {
-  let taskContent = taskInput.value;
-  taskList.push(taskContent);
+  let task = {
+    id: randomIDGenerate(),
+    taskContent: taskInput.value,
+    isComplete: false
+  }
+  taskList.push(task);
   console.log(taskList);
   render();
 }
@@ -22,16 +26,54 @@ function addTask() {
 function render() {
   let resultHTML = "";
   for (let i = 0; i < taskList.length; i++) {
-    resultHTML += `
+    if (taskList[i].isComplete == true) {
+      resultHTML += `
+      <div class="task check-bg">
+        <div class="task-done">${taskList[i].taskContent}</div>
+        <div>
+          <button class="check-button" onClick="toggleComplete('${taskList[i].id}')"><i class="fas fa-undo-alt"></i></button>
+          <button class="trash-button" onClick="deleteTask('${taskList[i].id}')"><i class="fa fa-trash"></i></button>
+        </div>
+      </div>
+      `;
+    }else {
+      resultHTML += `
             <div class="task">
-              <div>${taskList[i]}</div>
+              <div>${taskList[i].taskContent}</div>
               <div>
-                <button>Check</button>
-                <button>Delete</button>
+                <button class="check-button" onClick="toggleComplete('${taskList[i].id}')"><i class="fa fa-check"></i></button>
+                <button class="trash-button" onClick="deleteTask('${taskList[i].id}')"><i class="fa fa-trash"></i></button>
               </div>
             </div>
     `;
+    }
   }
 
   document.getElementById("task-board").innerHTML = resultHTML;
+}
+
+function toggleComplete(id) {
+  
+  for(let i = 0; i < taskList.length; i++) {
+    if(taskList[i].id == id) {
+      taskList[i].isComplete = !taskList[i].isComplete;
+      break;
+    }
+  }
+  render();
+  console.log(taskList);
+}
+
+function deleteTask(id) {
+  for(let i = 0; i < taskList.length; i++) {
+    if(taskList[i].id == id) {
+      taskList.splice(i,1)
+      break;
+    }
+  }
+  render();
+}
+
+function randomIDGenerate() {
+  return '_' + Math.random().toString(36).substr(2, 9);
 }

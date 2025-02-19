@@ -40,3 +40,18 @@ body {
   justify-content: space-between;
   padding: 1em;
 }
+
+.task-done {
+  text-decoration: line-through;
+  background-color: lightgray;
+}
+
+.fa-check, .check-button, .fa-trash, .trash-button {
+  color: white;
+  background-color: black;
+  /* border: none; */
+}
+
+.check-bg {
+  background-color: lightgray;
+}
