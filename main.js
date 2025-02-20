@@ -8,41 +8,73 @@
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div")
+let underLine = document.getElementById("under-line")
 let taskList = [];
+let mode = 'all';
+let filterList = [];
 
-addButton.addEventListener("click", addTask);
+addButton.addEventListener("mousedown", addTask);
+taskInput.addEventListener('keydown', function(event){
+  if(event.keyCode === 13) {
+    addTask(event); 
+  }
+  });
+
+  for (let i = 0; i < tabs.length; i++) {
+    tabs[i].addEventListener("click", function (event) {
+      filter(event);
+    });
+  }
+// console.log(tabs)
 
 function addTask() {
+  let taskValue = taskInput.value;
+  if(taskValue === "") return alert ("할일을 입력해주세요!");
+
   let task = {
     id: randomIDGenerate(),
-    taskContent: taskInput.value,
+    taskContent: taskValue,
     isComplete: false
   }
   taskList.push(task);
+  taskInput.value = '';
   console.log(taskList);
   render();
 }
 
 function render() {
+  // 1. 내가 선택한 탭에 따라서
+  let list = []
+  if(mode === "all") {
+  // all = taskList
+    list = taskList;
+  }else if(mode === "ongoing" || mode === "done") {
+  // ongoing, done filterList
+    list = filterList;
+  }
+  // 2. 리스트를 달리 보여준다
+
+  
   let resultHTML = "";
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].isComplete == true) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isComplete == true) {
       resultHTML += `
       <div class="task check-bg">
-        <div class="task-done">${taskList[i].taskContent}</div>
+        <div class="task-done">${list[i].taskContent}</div>
         <div>
-          <button class="check-button" onClick="toggleComplete('${taskList[i].id}')"><i class="fas fa-undo-alt"></i></button>
-          <button class="trash-button" onClick="deleteTask('${taskList[i].id}')"><i class="fa fa-trash"></i></button>
+          <button class="check-button" onClick="toggleComplete('${list[i].id}')"><i class="fas fa-undo-alt"></i></button>
+          <button class="trash-button" onClick="deleteTask('${list[i].id}')"><i class="fa fa-trash"></i></button>
         </div>
       </div>
       `;
     }else {
       resultHTML += `
             <div class="task">
-              <div>${taskList[i].taskContent}</div>
+              <div>${list[i].taskContent}</div>
               <div>
-                <button class="check-button" onClick="toggleComplete('${taskList[i].id}')"><i class="fa fa-check"></i></button>
-                <button class="trash-button" onClick="deleteTask('${taskList[i].id}')"><i class="fa fa-trash"></i></button>
+                <button class="check-button" onClick="toggleComplete('${list[i].id}')"><i class="fa fa-check"></i></button>
+                <button class="trash-button" onClick="deleteTask('${list[i].id}')"><i class="fa fa-trash"></i></button>
               </div>
             </div>
     `;
@@ -60,7 +92,7 @@ function toggleComplete(id) {
       break;
     }
   }
-  render();
+  filter();
   console.log(taskList);
 }
 
@@ -68,7 +100,36 @@ function deleteTask(id) {
   for(let i = 0; i < taskList.length; i++) {
     if(taskList[i].id == id) {
       taskList.splice(i,1)
-      break;
+
+    }
+  }
+  filter();
+}
+
+function filter(event) {
+  if (event) {
+    mode = event.target.id;
+    underLine.style.width = event.target.offsetWidth + "px";
+    underLine.style.left = event.target.offsetLeft + "px";
+    underLine.style.top =
+      event.target.offsetTop + (event.target.offsetHeight - 4) + "px";
+  }
+
+  filterList = [];
+  if(mode === "all") {
+    render();
+  }else if (mode === "ongoing") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete == false) {
+        filterList.push(taskList[i]);
+      }
+    }
+    
+  } else if (mode === "done") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete) {
+        filterList.push(taskList[i]);
+      }
     }
   }
   render();

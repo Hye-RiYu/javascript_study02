@@ -1,57 +1,213 @@
+/* 배경과 기본 스타일 */
 body {
   margin: 0;
+  font-family: 'Rajdhani', sans-serif;
   background-image: url("./images/360_F_123731572_KMfBEkpbRlfQj1ypdPVwv4W0r27B9hVJ.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
 }
 
 .container {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85); /* 반투명 배경 */
   min-height: 100vh;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 2em;
+  max-width: 500px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
+/* 타이틀 */
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 1.5em;
+}
+
+/* 입력 필드와 버튼 */
+.input-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+#task-input {
+  width: 80%;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
+}
+
+#add-button {
+  width: 15%;
+  padding: 0.5em;
+  border: none;
+  background-color: #ff4081;
+  color: white;
+  font-size: 1.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#add-button:hover {
+  background-color: #e6005c;
+}
+
+/* 할 일 리스트와 탭 */
 .task-area {
+  margin-top: 1.5em;
   border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding: 1em;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .task-tabs {
   display: flex;
-  border-bottom: 1px solid lightgrey;
+  justify-content: space-around;
+  border-bottom: 2px solid #ff4081;
+  margin-bottom: 1em;
   position: relative;
 }
 
 #under-line {
   height: 4px;
-  background-color: pink;
+  background-color: #ff4081;
   position: absolute;
-  width: 80px;
-  left: 0;
-  top: 52px;
-  padding: 0;
+  transition: 0.3s ease;
+  width: 48px;
+  left: 33px;
+  bottom: -28px;
 }
 
 .task-tabs div {
   padding: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333;
 }
 
+.task-tabs div:hover {
+  color: #ff4081;
+}
+
+/* 할 일 항목 */
 .task {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  margin-bottom: 0.8em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
 }
 
 .task-done {
   text-decoration: line-through;
-  background-color: lightgray;
+  color: #bbb;
 }
 
-.fa-check, .check-button, .fa-trash, .trash-button {
+.check-button, .trash-button {
+  background-color: #ff4081;
+  border: none;
+  padding: 0.5em;
+  border-radius: 50%;
   color: white;
-  background-color: black;
-  /* border: none; */
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+.check-button:hover, .trash-button:hover {
+  background-color: #e6005c;
+}
+
+/* 완료된 할 일 스타일 */
 .check-bg {
-  background-color: lightgray;
+  background-color: #f0f0f0;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0;
+    max-width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  #task-input {
+    width: 70%;
+  }
+
+  #add-button {
+    width: 20%;
+  }
+
+  .task-area {
+    padding: 1em;
+  }
+
+  .task-tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #under-line {
+    display: none;
+  }
+
+  .task-tabs div {
+    padding: 0.8em;
+    font-size: 1.2em;
+  }
+
+  .task {
+    padding: 0.8em;
+  }
+
+  .check-button, .trash-button {
+    padding: 0.4em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0;
+    max-width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  #task-input {
+    width: 65%;
+  }
+
+  #add-button {
+    width: 25%;
+  }
+
+  .task {
+    padding: 0.6em;
+  }
+
+  .task-tabs div {
+    font-size: 1.1em;
+  }
 }
